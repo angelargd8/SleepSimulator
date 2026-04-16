@@ -803,6 +803,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &996255018 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 3959581625177605956, guid: fa46e00c5a05eb9489c1b53b86af4bde, type: 3}
+  m_PrefabInstance: {fileID: 1990248601}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1028513131
 GameObject:
   m_ObjectHideFlags: 0
@@ -1395,6 +1400,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lamp
   isOn: 1
+  lampLight: {fileID: 996255018}
+  onRange: 2.5
+  offRange: 0
 --- !u!64 &1803015810
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1549,7 +1557,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3959581625177605956, guid: fa46e00c5a05eb9489c1b53b86af4bde, type: 3}
       propertyPath: m_Range
-      value: 2.3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3959581625177605956, guid: fa46e00c5a05eb9489c1b53b86af4bde, type: 3}
       propertyPath: m_Enabled
