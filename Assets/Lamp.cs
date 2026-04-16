@@ -1,5 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
+
 
 public class Lamp : MonoBehaviour, IInteractable
 {
@@ -20,7 +22,7 @@ public class Lamp : MonoBehaviour, IInteractable
 
         if (lampLight  != null )
         {
-            lampLight.range = isOn ? onRange : offRange;
+            StartCoroutine(FadeLight(isOn ? onRange : offRange));
         }
 
         Debug.Log("Luz: " + (isOn ? "Encendida" : "Apagada"));
@@ -35,4 +37,21 @@ public class Lamp : MonoBehaviour, IInteractable
             lampLight.range = isOn ? onRange : offRange;
         }
     }
+
+    IEnumerator FadeLight(float targetRange)
+    {
+        float start = lampLight.range;
+        float time = 0f;
+
+        while (time < 0.3f)
+        {
+            lampLight.range = Mathf.Lerp(start, targetRange, time / 0.3f);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        lampLight.range = targetRange;
+    }
+
+
 }
