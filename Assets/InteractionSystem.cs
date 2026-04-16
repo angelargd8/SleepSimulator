@@ -33,7 +33,6 @@ public class InteractionSystem : MonoBehaviour
         if (Physics.Raycast(ray, out hit, distance, interactLayer))
         {
 
-            //IInteractable interactable = hit.collider.GetComponent<IInteractable>();
             //buscar el padre si ve al hijo
             IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
 

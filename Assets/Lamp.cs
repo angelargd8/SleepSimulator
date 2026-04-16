@@ -1,9 +1,13 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Lamp : MonoBehaviour, IInteractable
 {
     public bool isOn = true;
-    //[SerializeField] lampLight;
+    [SerializeField] private Light lampLight;
+
+    public float onRange = 2.5f;
+    public float offRange = 0f;
 
     public string GetInteractionText()
     {
@@ -13,8 +17,22 @@ public class Lamp : MonoBehaviour, IInteractable
     public void Interact()
     {
         isOn = !isOn;
+
+        if (lampLight  != null )
+        {
+            lampLight.range = isOn ? onRange : offRange;
+        }
+
         Debug.Log("Luz: " + (isOn ? "Encendida" : "Apagada"));
 
         //luego evento de onlightchanged
+    }
+
+    public void Start()
+    {
+        if (lampLight != null)
+        {
+            lampLight.range = isOn ? onRange : offRange;
+        }
     }
 }
