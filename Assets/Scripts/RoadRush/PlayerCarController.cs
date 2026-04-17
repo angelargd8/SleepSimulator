@@ -45,6 +45,9 @@ public class PlayerCarController : MonoBehaviour
     [SerializeField] private float invulnerabilityTime = 1f;
     private bool isInvulnerable = false;
 
+    [Header("Lose Dream Controller")]
+    [SerializeField] private LoseDreamController loseDreamController;
+
     private float targetLaneX;
 
     // Boost automatico
@@ -343,8 +346,9 @@ public class PlayerCarController : MonoBehaviour
 
     private void GameOver()
     {
-        Debug.Log("GAME OVER");
-        Time.timeScale = 0f;
+        //Debug.Log("GAME OVER");
+        //Time.timeScale = 0f;
+        loseDreamController.PlayerLost();
     }
 
     private Lane GetCurrentLane()

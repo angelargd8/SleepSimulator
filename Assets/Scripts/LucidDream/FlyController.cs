@@ -13,7 +13,7 @@ namespace StarterAssets
     {
         [Header("Player")]
         public float MoveSpeed = 4.0f;
-        public float SprintSpeed = 6.0f;
+        public float SprintSpeed = 15.0f;
         public float RotationSpeed = 1.0f;
         public float SpeedChangeRate = 10.0f;
 

@@ -68,6 +68,7 @@
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualJoystick.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\RoadRush\SegmentPool.cs" />
+    <Compile Include="Assets\Scripts\DreamLoseController.cs" />
     <Compile Include="Assets\Scripts\DreamManager.cs" />
     <Compile Include="Assets\Scripts\SleepSystem.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\VegetationBendControl.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\CanvasInputs\UICanvasControllerInput.cs" />
     <Compile Include="Assets\Scripts\RoadRush\CameraFollow.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\ExitGame.cs" />
+    <Compile Include="Assets\Scripts\TimedDreamController.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\BushLeafTrigger.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\StarterAssets\InputSystem\StarterAssetsInputs.cs" />
