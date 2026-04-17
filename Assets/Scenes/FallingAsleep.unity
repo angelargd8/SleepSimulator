@@ -325,6 +325,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &743183921
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 743183923}
+  - component: {fileID: 743183922}
+  m_Layer: 0
+  m_Name: FallingAsleepController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &743183922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743183921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55b80fe1839db584ab4736773544d7cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  waitTime: 3
+  dreamManager: {fileID: 2609920389648730103, guid: f35c52e483905ae4789cf2ea68848b4d, type: 3}
+--- !u!4 &743183923
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743183921}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 168.03664, y: -0, z: 307.8837}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1603271754
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,6 +612,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71e4ec70cb37813408833f109b0717d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  transitionDuration: 5
+  dreamManager: {fileID: 0}
 --- !u!4 &1666760520
 Transform:
   m_ObjectHideFlags: 0
@@ -785,3 +833,4 @@ SceneRoots:
   - {fileID: 219679675}
   - {fileID: 2000054503}
   - {fileID: 1666760520}
+  - {fileID: 743183923}
