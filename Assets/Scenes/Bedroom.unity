@@ -418,6 +418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bed
   sleepPoint: {fileID: 1162578525}
   sleepSystem: {fileID: 573176710}
+  lamp: {fileID: 1803015807}
 --- !u!1 &739297647
 GameObject:
   m_ObjectHideFlags: 0
