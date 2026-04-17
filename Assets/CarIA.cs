@@ -166,12 +166,28 @@ public class CarIA : MonoBehaviour
 
     private void RespawnBehindPlayer()
     {
-        float[] lanes = { leftLaneX, middleLaneX, rightLaneX };
+        if (player == null)
+            return;
+
+        // Si ya hay demasiados carros detras del jugador, no reaparece atras
+        int carsBehind = CountCarsBehindPlayer(12f);
+
+        float[] preferredLanes = { leftLaneX, middleLaneX, rightLaneX };
 
         for (int i = 0; i < 10; i++)
         {
-            float randomLaneX = lanes[Random.Range(0, lanes.Length)];
-            float randomZ = player.position.z + Random.Range(respawnBehindMin, respawnBehindMax);
+            float randomLaneX = preferredLanes[Random.Range(0, preferredLanes.Length)];
+
+            // Evitar el carril del jugador
+            if (IsPlayerLane(randomLaneX))
+                continue;
+
+            // Si ya hay 2 carros detras, reaparece mas lejos o adelante para no llenar los 3 carriles
+            float randomZ;
+            if (carsBehind >= 2)
+                randomZ = player.position.z + Random.Range(-35f, -25f);
+            else
+                randomZ = player.position.z + Random.Range(respawnBehindMin, respawnBehindMax);
 
             Vector3 spawnPos = new Vector3(randomLaneX, transform.position.y, randomZ);
 
@@ -185,8 +201,12 @@ public class CarIA : MonoBehaviour
             }
         }
 
-        float fallbackLaneX = middleLaneX;
-        float fallbackZ = player.position.z + respawnBehindMax;
+        // fallback
+        float fallbackLaneX = leftLaneX;
+        if (IsPlayerLane(fallbackLaneX))
+            fallbackLaneX = rightLaneX;
+
+        float fallbackZ = player.position.z - 30f;
         transform.position = new Vector3(fallbackLaneX, transform.position.y, fallbackZ);
         targetLaneX = fallbackLaneX;
         isChangingLane = false;
@@ -376,6 +396,32 @@ public class CarIA : MonoBehaviour
         }
 
         return middleLaneX;
+    }
+
+    private int CountCarsBehindPlayer(float distance)
+    {
+        if (player == null)
+            return 0;
+
+        Collider[] hits = Physics.OverlapBox(
+            new Vector3(player.position.x, transform.position.y, player.position.z - distance * 0.5f),
+            new Vector3(10f, 2f, distance * 0.5f),
+            Quaternion.identity,
+            carLayer
+        );
+
+        int count = 0;
+
+        foreach (Collider hit in hits)
+        {
+            if (hit.gameObject == gameObject)
+                continue;
+
+            if (hit.transform.position.z < player.position.z)
+                count++;
+        }
+
+        return count;
     }
 
     private void OnDrawGizmosSelected()

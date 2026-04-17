@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class PlayerCarController : MonoBehaviour
@@ -17,9 +18,20 @@ public class PlayerCarController : MonoBehaviour
 
     [Header("Detección enemigo detrás")]
     [SerializeField] private float rearCheckDistance = 0.25f;
-    //[SerializeField] private Vector3 rearCheckBoxHalfExtents = new Vector3(1.3f, 1.2f, 3.5f);
-    [SerializeField] private Vector3 rearCheckBoxHalfExtents = new Vector3(1.3f, 1.2f, 0.6f);
+    [SerializeField] private Vector3 rearCheckBoxHalfExtents = new Vector3(0.5f, 0.8f, 0.08f);
     [SerializeField] private LayerMask enemyCarLayer;
+
+    [Header("Vida")]
+    [SerializeField] private int lives = 3;
+    [SerializeField] private TMP_Text livesText;
+
+    [Header("Bloqueo de carril")]
+    [SerializeField] private Vector3 laneBlockCheckHalfExtents = new Vector3(0.8f, 1.0f, 1.0f);
+    [SerializeField] private float laneBlockSameZTolerance = 1.2f;
+
+    [Header("Daño")]
+    [SerializeField] private float invulnerabilityTime = 1f;
+    private bool isInvulnerable = false;
 
     private float targetLaneX;
     private float boostTimer = 0f;
@@ -35,6 +47,7 @@ public class PlayerCarController : MonoBehaviour
     private void Start()
     {
         targetLaneX = GetClosestLaneX();
+        UpdateLivesUI();
     }
 
     private void Update()
@@ -60,31 +73,53 @@ public class PlayerCarController : MonoBehaviour
     private void MoveLeft()
     {
         Lane currentLane = GetCurrentLane();
+        float desiredLaneX = transform.position.x;
 
         switch (currentLane)
         {
             case Lane.Middle:
-                targetLaneX = leftLaneX;
+                desiredLaneX = leftLaneX;
                 break;
             case Lane.Right:
-                targetLaneX = middleLaneX;
+                desiredLaneX = middleLaneX;
                 break;
+            default:
+                return;
         }
+
+        if (IsLaneBlocked(desiredLaneX))
+        {
+            TakeDamage();
+            return;
+        }
+
+        targetLaneX = desiredLaneX;
     }
 
     private void MoveRight()
     {
         Lane currentLane = GetCurrentLane();
+        float desiredLaneX = transform.position.x;
 
         switch (currentLane)
         {
             case Lane.Middle:
-                targetLaneX = rightLaneX;
+                desiredLaneX = rightLaneX;
                 break;
             case Lane.Left:
-                targetLaneX = middleLaneX;
+                desiredLaneX = middleLaneX;
                 break;
+            default:
+                return;
         }
+
+        if (IsLaneBlocked(desiredLaneX))
+        {
+            TakeDamage();
+            return;
+        }
+
+        targetLaneX = desiredLaneX;
     }
 
     private void HandleLaneChange()
@@ -115,7 +150,7 @@ public class PlayerCarController : MonoBehaviour
 
     private bool IsEnemyBehind()
     {
-        Vector3 checkCenter = transform.position + Vector3.back * (rearCheckDistance * 0.5f);
+        Vector3 checkCenter = transform.position + Vector3.back * (rearCheckDistance * 0.35f);
 
         Collider[] hits = Physics.OverlapBox(
             checkCenter,
@@ -129,11 +164,97 @@ public class PlayerCarController : MonoBehaviour
             if (hit.gameObject == gameObject)
                 continue;
 
-            if (hit.transform.position.z < transform.position.z)
+            bool behindPlayer = hit.transform.position.z < transform.position.z;
+            bool sameLane = Mathf.Abs(hit.transform.position.x - transform.position.x) < 0.35f;
+
+            if (behindPlayer && sameLane)
                 return true;
         }
 
         return false;
+    }
+
+    private bool IsLaneBlocked(float desiredLaneX)
+    {
+        Vector3 checkCenter = new Vector3(
+            desiredLaneX,
+            transform.position.y,
+            transform.position.z
+        );
+
+        Collider[] hits = Physics.OverlapBox(
+            checkCenter,
+            laneBlockCheckHalfExtents,
+            Quaternion.identity,
+            enemyCarLayer
+        );
+
+        foreach (Collider hit in hits)
+        {
+            if (hit.gameObject == gameObject)
+                continue;
+
+            bool closeInZ = Mathf.Abs(hit.transform.position.z - transform.position.z) <= laneBlockSameZTolerance;
+
+            if (closeInZ)
+                return true;
+        }
+
+        return false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            TakeDamage();
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            TakeDamage();
+        }
+    }
+
+    private void TakeDamage()
+    {
+        if (isInvulnerable)
+            return;
+
+        lives--;
+        isInvulnerable = true;
+
+        Debug.Log("Golpe! Vidas restantes: " + lives);
+        UpdateLivesUI();
+
+        Invoke(nameof(ResetInvulnerability), invulnerabilityTime);
+
+        if (lives <= 0)
+        {
+            GameOver();
+        }
+    }
+
+    private void ResetInvulnerability()
+    {
+        isInvulnerable = false;
+    }
+
+    private void UpdateLivesUI()
+    {
+        if (livesText != null)
+        {
+            livesText.text = "Vidas: " + lives;
+        }
+    }
+
+    private void GameOver()
+    {
+        Debug.Log("GAME OVER");
+        Time.timeScale = 0f;
     }
 
     private Lane GetCurrentLane()
@@ -169,7 +290,16 @@ public class PlayerCarController : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Vector3 checkCenter = transform.position + Vector3.back * (rearCheckDistance * 0.5f);
-        Gizmos.DrawWireCube(checkCenter, rearCheckBoxHalfExtents * 2f);
+        Vector3 rearCheckCenter = transform.position + Vector3.back * (rearCheckDistance * 0.35f);
+        Gizmos.DrawWireCube(rearCheckCenter, rearCheckBoxHalfExtents * 2f);
+
+        Gizmos.color = Color.yellow;
+        Vector3 laneCheckLeft = new Vector3(leftLaneX, transform.position.y, transform.position.z);
+        Vector3 laneCheckMiddle = new Vector3(middleLaneX, transform.position.y, transform.position.z);
+        Vector3 laneCheckRight = new Vector3(rightLaneX, transform.position.y, transform.position.z);
+
+        Gizmos.DrawWireCube(laneCheckLeft, laneBlockCheckHalfExtents * 2f);
+        Gizmos.DrawWireCube(laneCheckMiddle, laneBlockCheckHalfExtents * 2f);
+        Gizmos.DrawWireCube(laneCheckRight, laneBlockCheckHalfExtents * 2f);
     }
 }
