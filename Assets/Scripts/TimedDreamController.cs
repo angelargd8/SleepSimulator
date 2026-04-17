@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class TimedDreamController : MonoBehaviour
 {
-    [SerializeField] private float dreamDuration = 20f;
+    [SerializeField] private float dreamDuration = 60f;
     [SerializeField] private string returnSceneName = "Bedroom";
 
     private void Start()

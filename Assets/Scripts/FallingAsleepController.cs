@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class FallingAsleepController : MonoBehaviour
 {
-    [SerializeField] private float waitTime = 3f;
+    [SerializeField] private float waitTime = 5f;
     [SerializeField] private DreamManager dreamManager;
 
     private void Start()
