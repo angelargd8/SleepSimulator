@@ -25,6 +25,11 @@ public class PlayerCarController : MonoBehaviour
     [SerializeField] private int lives = 3;
     [SerializeField] private TMP_Text livesText;
 
+    [Header("Score")]
+    [SerializeField] private int score = 0;
+    private float scoreAccumulator = 0f;
+    [SerializeField] private TMP_Text scoreText;
+
     [Header("Bloqueo de carril")]
     [SerializeField] private Vector3 laneBlockCheckHalfExtents = new Vector3(0.8f, 1.0f, 1.0f);
     [SerializeField] private float laneBlockSameZTolerance = 1.2f;
@@ -55,6 +60,29 @@ public class PlayerCarController : MonoBehaviour
         HandleInput();
         HandleLaneChange();
         HandleBoost();
+        UpdateScore();
+    }
+
+
+    private void UpdateScore()
+    {
+        scoreAccumulator += 10f * Time.deltaTime;
+
+        if (boostTimer > 0f)
+        {
+            scoreAccumulator += boostSpeed * 5f * Time.deltaTime;
+        }
+
+        score = Mathf.FloorToInt(scoreAccumulator);
+        UpdateScoreUI();
+    }
+
+    private void UpdateScoreUI()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = "Score: " + score;
+        }
     }
 
     private void HandleInput()
@@ -247,7 +275,7 @@ public class PlayerCarController : MonoBehaviour
     {
         if (livesText != null)
         {
-            livesText.text = "Vidas: " + lives;
+            livesText.text = "Choques restantes: " + lives;
         }
     }
 
