@@ -1,0 +1,393 @@
+using UnityEngine;
+
+public class CarIA : MonoBehaviour
+{
+    [Header("Carriles")]
+    [SerializeField] private float leftLaneX = -4.3f;
+    [SerializeField] private float middleLaneX = -1.29f;
+    [SerializeField] private float rightLaneX = 1.4f;
+
+    [Header("Movimiento")]
+    [SerializeField] private float forwardSpeed = 8f;
+    [SerializeField] private float minSpeed = 1f;
+    [SerializeField] private float maxSpeed = 10f;
+    [SerializeField] private float laneChangeSpeed = 4f;
+    [SerializeField] private float zMovementFactor = 0.15f;
+
+    [Header("Jugador")]
+    [SerializeField] private Transform player;
+
+    [Header("Rango relativo al jugador")]
+    [SerializeField] private float tooFarAheadZ = 20f;
+    [SerializeField] private float tooFarBehindZ = -25f;
+    [SerializeField] private float respawnBehindMin = -20f;
+    [SerializeField] private float respawnBehindMax = -12f;
+
+    [Header("Decisiones")]
+    [SerializeField] private float decisionInterval = 2f;
+    [SerializeField] private float laneChangeChance = 0.45f;
+    [SerializeField] private float speedChangeChance = 0.65f;
+
+    [Header("Detección")]
+    [SerializeField] private float sideCheckRadius = 1.2f;
+    [SerializeField] private float forwardBackCheckDistance = 4f;
+    [SerializeField] private LayerMask carLayer;
+
+    [Header("Reacción al jugador")]
+    [SerializeField] private float sameLaneTolerance = 0.6f;
+    [SerializeField] private float slowDownAmount = 2f;
+
+    [Header("Comportamiento evasivo")]
+    [SerializeField] private float preferredBehindDistance = 10f;
+    [SerializeField] private float avoidPlayerSideDistance = 2f;
+    [SerializeField] private float overtakeBoost = 3f;
+    [SerializeField] private float evadeBoost = 2f;
+    [SerializeField] private float speedRecoverRate = 1.5f;
+
+    private float targetLaneX;
+    private bool isChangingLane = false;
+    private float decisionTimer;
+
+    private enum Lane
+    {
+        Left,
+        Middle,
+        Right
+    }
+
+    private void Start()
+    {
+        targetLaneX = GetClosestLaneX();
+        decisionTimer = decisionInterval;
+        forwardSpeed = Random.Range(minSpeed, maxSpeed);
+    }
+
+    private void Update()
+    {
+        ReactToPlayer();
+        MoveForward();
+        HandleLaneChange();
+        HandleDecisionTimer();
+        RecycleIfNeeded();
+    }
+
+    private void ReactToPlayer()
+    {
+        if (player == null)
+            return;
+
+        float zDiff = player.position.z - transform.position.z;
+        float absZDiff = Mathf.Abs(zDiff);
+
+        bool isBehindPlayer = zDiff > 0f && zDiff < preferredBehindDistance;
+        bool isSideBySide = absZDiff <= avoidPlayerSideDistance;
+        bool sameLane = Mathf.Abs(transform.position.x - player.position.x) < sameLaneTolerance;
+
+        if (isBehindPlayer && sameLane)
+        {
+            Lane currentLane = GetCurrentLane();
+
+            if (currentLane == Lane.Middle)
+            {
+                Lane firstOption = Random.value < 0.5f ? Lane.Left : Lane.Right;
+                Lane secondOption = firstOption == Lane.Left ? Lane.Right : Lane.Left;
+
+                if (TryForceLaneChange(firstOption, true))
+                {
+                    forwardSpeed = Mathf.Min(maxSpeed, forwardSpeed + evadeBoost * Time.deltaTime);
+                    return;
+                }
+
+                if (TryForceLaneChange(secondOption, true))
+                {
+                    forwardSpeed = Mathf.Min(maxSpeed, forwardSpeed + evadeBoost * Time.deltaTime);
+                    return;
+                }
+            }
+            else
+            {
+                if (TryForceLaneChange(Lane.Middle, true))
+                {
+                    forwardSpeed = Mathf.Min(maxSpeed, forwardSpeed + evadeBoost * Time.deltaTime);
+                    return;
+                }
+            }
+
+            forwardSpeed = Mathf.Max(minSpeed, forwardSpeed - slowDownAmount * Time.deltaTime);
+            return;
+        }
+
+        if (isSideBySide)
+        {
+            forwardSpeed = Mathf.Min(maxSpeed, forwardSpeed + overtakeBoost * Time.deltaTime);
+            return;
+        }
+
+        float cruisingSpeed = Mathf.Lerp(minSpeed, maxSpeed, 0.5f);
+        forwardSpeed = Mathf.MoveTowards(forwardSpeed, cruisingSpeed, speedRecoverRate * Time.deltaTime);
+    }
+
+    private bool TryForceLaneChange(Lane desiredLane, bool avoidPlayerLane)
+    {
+        float desiredX = GetLaneX(desiredLane);
+
+        if (avoidPlayerLane && IsPlayerLane(desiredX))
+            return false;
+
+        if (CanChangeToLane(desiredX))
+        {
+            targetLaneX = desiredX;
+            isChangingLane = true;
+            return true;
+        }
+
+        return false;
+    }
+
+    private void MoveForward()
+    {
+        Vector3 pos = transform.position;
+        pos.z += forwardSpeed * zMovementFactor * Time.deltaTime;
+        transform.position = pos;
+    }
+
+    private void RecycleIfNeeded()
+    {
+        if (player == null)
+            return;
+
+        float relativeZ = transform.position.z - player.position.z;
+
+        if (relativeZ > tooFarAheadZ || relativeZ < tooFarBehindZ)
+        {
+            RespawnBehindPlayer();
+        }
+    }
+
+    private void RespawnBehindPlayer()
+    {
+        float[] lanes = { leftLaneX, middleLaneX, rightLaneX };
+
+        for (int i = 0; i < 10; i++)
+        {
+            float randomLaneX = lanes[Random.Range(0, lanes.Length)];
+            float randomZ = player.position.z + Random.Range(respawnBehindMin, respawnBehindMax);
+
+            Vector3 spawnPos = new Vector3(randomLaneX, transform.position.y, randomZ);
+
+            if (IsSpawnPositionFree(spawnPos))
+            {
+                transform.position = spawnPos;
+                targetLaneX = randomLaneX;
+                isChangingLane = false;
+                forwardSpeed = Random.Range(minSpeed, maxSpeed);
+                return;
+            }
+        }
+
+        float fallbackLaneX = middleLaneX;
+        float fallbackZ = player.position.z + respawnBehindMax;
+        transform.position = new Vector3(fallbackLaneX, transform.position.y, fallbackZ);
+        targetLaneX = fallbackLaneX;
+        isChangingLane = false;
+    }
+
+    private bool IsSpawnPositionFree(Vector3 spawnPos)
+    {
+        Collider[] nearbyCars = Physics.OverlapBox(
+            spawnPos,
+            new Vector3(sideCheckRadius, 1.5f, forwardBackCheckDistance),
+            Quaternion.identity,
+            carLayer
+        );
+
+        foreach (Collider col in nearbyCars)
+        {
+            if (col.gameObject == gameObject)
+                continue;
+
+            return false;
+        }
+
+        return true;
+    }
+
+    private void HandleLaneChange()
+    {
+        Vector3 pos = transform.position;
+        float newX = Mathf.MoveTowards(pos.x, targetLaneX, laneChangeSpeed * Time.deltaTime);
+        transform.position = new Vector3(newX, pos.y, pos.z);
+
+        if (Mathf.Abs(transform.position.x - targetLaneX) < 0.05f)
+        {
+            transform.position = new Vector3(targetLaneX, transform.position.y, transform.position.z);
+            isChangingLane = false;
+        }
+    }
+
+    private void HandleDecisionTimer()
+    {
+        decisionTimer -= Time.deltaTime;
+
+        if (decisionTimer > 0f || isChangingLane)
+            return;
+
+        decisionTimer = decisionInterval + Random.Range(-0.5f, 0.8f);
+
+        if (Random.value < speedChangeChance)
+        {
+            ChangeSpeedRandomly();
+        }
+
+        if (Random.value < laneChangeChance)
+        {
+            TryLaneChange();
+        }
+    }
+
+    private void ChangeSpeedRandomly()
+    {
+        float speedOffset = Random.Range(-2f, 2f);
+        forwardSpeed = Mathf.Clamp(forwardSpeed + speedOffset, minSpeed, maxSpeed);
+    }
+
+    private void TryLaneChange()
+    {
+        Lane currentLane = GetCurrentLane();
+        Lane targetLane = currentLane;
+
+        bool isBehindPlayer = false;
+        if (player != null)
+        {
+            float zDiff = player.position.z - transform.position.z;
+            isBehindPlayer = zDiff > 0f && zDiff < preferredBehindDistance;
+        }
+
+        switch (currentLane)
+        {
+            case Lane.Left:
+                targetLane = Lane.Middle;
+                break;
+
+            case Lane.Right:
+                targetLane = Lane.Middle;
+                break;
+
+            case Lane.Middle:
+                if (isBehindPlayer)
+                {
+                    bool playerInLeft = IsPlayerLane(leftLaneX);
+                    bool playerInRight = IsPlayerLane(rightLaneX);
+
+                    if (playerInLeft && !playerInRight)
+                        targetLane = Lane.Right;
+                    else if (playerInRight && !playerInLeft)
+                        targetLane = Lane.Left;
+                    else
+                        targetLane = Random.value < 0.5f ? Lane.Left : Lane.Right;
+                }
+                else
+                {
+                    targetLane = Random.value < 0.5f ? Lane.Left : Lane.Right;
+                }
+                break;
+        }
+
+        float desiredX = GetLaneX(targetLane);
+
+        if (isBehindPlayer && IsPlayerLane(desiredX))
+            return;
+
+        if (CanChangeToLane(desiredX))
+        {
+            targetLaneX = desiredX;
+            isChangingLane = true;
+        }
+    }
+
+    private bool CanChangeToLane(float desiredLaneX)
+    {
+        Vector3 currentPos = transform.position;
+        Vector3 checkCenter = new Vector3(desiredLaneX, currentPos.y, currentPos.z);
+
+        Collider[] nearbyCars = Physics.OverlapBox(
+            checkCenter,
+            new Vector3(sideCheckRadius, 1.5f, forwardBackCheckDistance),
+            Quaternion.identity,
+            carLayer
+        );
+
+        foreach (Collider col in nearbyCars)
+        {
+            if (col.gameObject == gameObject)
+                continue;
+
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool IsPlayerLane(float laneX)
+    {
+        if (player == null)
+            return false;
+
+        return Mathf.Abs(player.position.x - laneX) < sameLaneTolerance;
+    }
+
+    private Lane GetCurrentLane()
+    {
+        float x = GetClosestLaneX();
+
+        if (Mathf.Abs(x - leftLaneX) < 0.1f)
+            return Lane.Left;
+
+        if (Mathf.Abs(x - middleLaneX) < 0.1f)
+            return Lane.Middle;
+
+        return Lane.Right;
+    }
+
+    private float GetClosestLaneX()
+    {
+        float x = transform.position.x;
+
+        float distLeft = Mathf.Abs(x - leftLaneX);
+        float distMiddle = Mathf.Abs(x - middleLaneX);
+        float distRight = Mathf.Abs(x - rightLaneX);
+
+        if (distLeft < distMiddle && distLeft < distRight)
+            return leftLaneX;
+
+        if (distMiddle < distLeft && distMiddle < distRight)
+            return middleLaneX;
+
+        return rightLaneX;
+    }
+
+    private float GetLaneX(Lane lane)
+    {
+        switch (lane)
+        {
+            case Lane.Left: return leftLaneX;
+            case Lane.Middle: return middleLaneX;
+            case Lane.Right: return rightLaneX;
+        }
+
+        return middleLaneX;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (player == null)
+            return;
+
+        Gizmos.color = Color.red;
+        Vector3 behindCenter = new Vector3(transform.position.x, transform.position.y, transform.position.z + preferredBehindDistance * 0.5f);
+        Gizmos.DrawWireCube(behindCenter, new Vector3(1f, 1f, preferredBehindDistance));
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(transform.position, new Vector3(1f, 1f, avoidPlayerSideDistance * 2f));
+    }
+}

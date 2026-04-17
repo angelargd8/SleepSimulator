@@ -13,7 +13,7 @@ public class SegmentPool : MonoBehaviour
 
     private Queue<GameObject> activeSegments = new Queue<GameObject>();
 
-    private float segmentLength = 10f;
+    private float segmentLength = 50f;
 
     private float spawnZ = 0;
 
@@ -57,11 +57,11 @@ public class SegmentPool : MonoBehaviour
         {
 
             
-            segment.transform.Translate(Vector3.back * speed * Time.deltaTime);
+            segment.transform.Translate(Vector3.back * speed * Time.deltaTime * 2f);
 
         }
 
-        if (activeSegments.Count > 0 && activeSegments.Peek().transform.position.z < -segmentLength)
+        if (activeSegments.Count > 0 && activeSegments.Peek().transform.position.z < -segmentLength * 2f)
         {
             var seg = activeSegments.Dequeue();
 
