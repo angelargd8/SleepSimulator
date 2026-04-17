@@ -7,3 +7,4 @@ Assets:
 - https://ambientcg.com/view?id=NightSkyHDRI003
 - https://assetstore.unity.com/packages/3d/environments/urban/city-voxel-pack-136141
 - https://assetstore.unity.com/packages/3d/vegetation/trees/low-poly-tree-pack-57866
+- https://assetstore.unity.com/packages/3d/environments/fantasy/idyllic-fantasy-nature-260042
