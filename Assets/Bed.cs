@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class Bed : MonoBehaviour, IInteractable
 {
+    [SerializeField] private Transform sleepPoint;
+    [SerializeField] private SleepSystem sleepSystem;
+
+
     public string GetInteractionText()
     {
         return "Presiona E para dormir";
@@ -10,6 +14,11 @@ public class Bed : MonoBehaviour, IInteractable
     public void Interact()
     {
         Debug.Log("Durmiendo");
-        //luego disparar evento de onplayersleep attempt
+        
+
+        if (sleepSystem != null && sleepPoint != null)
+        {
+            sleepSystem.StartSleeping(sleepPoint);
+        }
     }
 }
