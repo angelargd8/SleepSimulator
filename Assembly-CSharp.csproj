@@ -63,14 +63,21 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\RoadRush\PlayerCarController.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualTouchZone.cs" />
+    <Compile Include="Assets\Scripts\LucidDream\FlyController.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualJoystick.cs" />
+    <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\RoadRush\SegmentPool.cs" />
     <Compile Include="Assets\IInteractable.cs" />
+    <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\VegetationBendControl.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\Utilities\MobileDisableAutoSwitchControls.cs" />
+    <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\WindControl.cs" />
+    <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\CameraMovement.cs" />
     <Compile Include="Assets\StarterAssets\FirstPersonController\Scripts\FirstPersonController.cs" />
+    <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\ButterflySpawn.cs" />
     <Compile Include="Assets\Lamp.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualButton.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
+    <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\ButterflySpawnArea.cs" />
     <Compile Include="Assets\SleepSystem.cs" />
     <Compile Include="Assets\Scripts\RoadRush\CarIA.cs" />
     <Compile Include="Assets\InteractionSystem.cs" />
@@ -78,7 +85,9 @@
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\CanvasInputs\UICanvasControllerInput.cs" />
     <Compile Include="Assets\Scripts\RoadRush\CameraFollow.cs" />
     <Compile Include="Assets\DreamTransition.cs" />
+    <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\ExitGame.cs" />
     <Compile Include="Assets\DreamManager.cs" />
+    <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\BushLeafTrigger.cs" />
     <Compile Include="Assets\StarterAssets\InputSystem\StarterAssetsInputs.cs" />
     <Compile Include="Assets\Bed.cs" />
     <Compile Include="Assets\SceneLoader.cs" />
@@ -105,6 +114,7 @@
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\Idyllic Fantasy Nature\Shader\CustomLighting.hlsl" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
