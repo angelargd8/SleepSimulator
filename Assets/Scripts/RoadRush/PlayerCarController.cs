@@ -11,10 +11,17 @@ public class PlayerCarController : MonoBehaviour
     [Header("Movimiento lateral")]
     [SerializeField] private float laneChangeSpeed = 8f;
 
-    [Header("Boost en Z")]
+    [Header("Boost automatico en Z")]
     [SerializeField] private float boostSpeed = 2f;
     [SerializeField] private float boostDuration = 0.3f;
     [SerializeField] private float boostCooldown = 1.5f;
+
+    [Header("Boost con Shift")]
+    [SerializeField] private float manualBoostSpeed = 6f;
+    [SerializeField] private float manualBoostDuration = 1.0f;
+    [SerializeField] private float manualBoostCooldown = 0.1f;
+    [SerializeField] private int manualBoostCharges = 3;
+    [SerializeField] private TMP_Text boostText;
 
     [Header("Detección enemigo detrás")]
     [SerializeField] private float rearCheckDistance = 0.25f;
@@ -39,8 +46,14 @@ public class PlayerCarController : MonoBehaviour
     private bool isInvulnerable = false;
 
     private float targetLaneX;
+
+    // Boost automatico
     private float boostTimer = 0f;
     private float cooldownTimer = 0f;
+
+    // Boost manual
+    private float manualBoostTimer = 0f;
+    private float manualBoostCooldownTimer = 0f;
 
     private enum Lane
     {
@@ -53,6 +66,8 @@ public class PlayerCarController : MonoBehaviour
     {
         targetLaneX = GetClosestLaneX();
         UpdateLivesUI();
+        UpdateScoreUI();
+        UpdateBoostUI();
     }
 
     private void Update()
@@ -60,9 +75,9 @@ public class PlayerCarController : MonoBehaviour
         HandleInput();
         HandleLaneChange();
         HandleBoost();
+        HandleManualBoost();
         UpdateScore();
     }
-
 
     private void UpdateScore()
     {
@@ -71,6 +86,11 @@ public class PlayerCarController : MonoBehaviour
         if (boostTimer > 0f)
         {
             scoreAccumulator += boostSpeed * 5f * Time.deltaTime;
+        }
+
+        if (manualBoostTimer > 0f)
+        {
+            scoreAccumulator += manualBoostSpeed * 6f * Time.deltaTime;
         }
 
         score = Mathf.FloorToInt(scoreAccumulator);
@@ -96,6 +116,28 @@ public class PlayerCarController : MonoBehaviour
         {
             MoveRight();
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+        {
+            TryUseManualBoost();
+        }
+    }
+
+    private void TryUseManualBoost()
+    {
+        if (manualBoostCharges <= 0)
+            return;
+
+        if (manualBoostCooldownTimer > 0f)
+            return;
+
+        if (manualBoostTimer > 0f)
+            return;
+
+        manualBoostCharges--;
+        manualBoostTimer = manualBoostDuration;
+        manualBoostCooldownTimer = manualBoostCooldown;
+        UpdateBoostUI();
     }
 
     private void MoveLeft()
@@ -173,6 +215,18 @@ public class PlayerCarController : MonoBehaviour
         {
             boostTimer = boostDuration;
             cooldownTimer = boostCooldown + boostDuration;
+        }
+    }
+
+    private void HandleManualBoost()
+    {
+        if (manualBoostCooldownTimer > 0f)
+            manualBoostCooldownTimer -= Time.deltaTime;
+
+        if (manualBoostTimer > 0f)
+        {
+            manualBoostTimer -= Time.deltaTime;
+            transform.position += Vector3.forward * manualBoostSpeed * Time.deltaTime;
         }
     }
 
@@ -276,6 +330,14 @@ public class PlayerCarController : MonoBehaviour
         if (livesText != null)
         {
             livesText.text = "Choques restantes: " + lives;
+        }
+    }
+
+    private void UpdateBoostUI()
+    {
+        if (boostText != null)
+        {
+            boostText.text = "Boost: " + manualBoostCharges;
         }
     }
 
