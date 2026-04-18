@@ -1,5 +1,27 @@
 # SleepSimulator
 
+### Enlace del video: 
+
+https://youtu.be/i71BeMZzGlQ
+
+# Demo en Itch.io: 
+https://angelargd8.itch.io/sleepsimulator?secret=gMhjAZNXUgFbp9xSiKY1KUWDim8
+
+
+# Objetivo del juego:
+Sobrevivir a la semana laboral. Dormir procurando que el score no llegue tan bajo porque eso indica que no tuvo un descanso reparador.
+
+# Limitaciones y reglas: 
+El jugador no puede escoger qué tipo de sueño quiere tener o si quiere guardar el score porque eso depende de su memoria. 
+Puede tener un sueño lúcido si tiene un score alto, ya que estos tienen un costo alto.
+
+## Controles
+- **W, A, S, D** – Movimiento
+- **Space** – Salto
+- **Mouse** – Mirar alrededor
+- **Double Space (LucidDream)** – Volar
+
+
 Assets: 
 - https://assetstore.unity.com/packages/3d/props/electronics/old-ussr-lamp-110400
 - https://assetstore.unity.com/packages/3d/props/basic-bedroom-starterpack-215986
