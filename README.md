@@ -2,7 +2,7 @@
 
 ### Enlace del video: 
 
-https://youtu.be/i71BeMZzGlQ
+https://youtu.be/5QcZM5y6SS8
 
 # Demo de la primera version en Itch.io: 
 https://angelargd8.itch.io/sleepsimulator?secret=gMhjAZNXUgFbp9xSiKY1KUWDim8
@@ -32,6 +32,17 @@ Llegar lo más lejos posible mientras se evitan obstaculos y se obtienen recompe
 - **D / Right Arrow** – moverse a la derecha
 - **Space** – Salto
 - **shift** - boost
+
+## Object Pooling
+Se utilizó Object Pooling para mejorar el rendimiento, reutilizando objetos en lugar de crearlos y destruirlos constantemente durante el juego.
+En este mini‑juego, el Object Pooling se usa principalmente en el sistema SegmentPool:
+
+- Los segmentos de carretera se crean una sola vez al inicio.
+- Los segmentos activos se mueven hacia atrás para simular que el jugador avanza. Cuando un segmento queda demasiado atrás del jugador, se mueve al frente en lugar de destruirse.
+
+Las recompensas, como las ruedas, también se reutilizan junto con cada segmento. Cuando el jugador recoge una rueda, esta se desactiva en lugar de destruirse. Cuando el segmento de carretera se recicla, las ruedas dentro de ese segmento se reinician y se activan nuevamente.
+Esto ayuda a mantener el juego eficiente.
+
 
 Recompensas: 
 - wheels
