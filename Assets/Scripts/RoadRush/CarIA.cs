@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CarIA : MonoBehaviour
@@ -241,22 +242,21 @@ public class CarIA : MonoBehaviour
 
         float[] preferredLanes = { leftLaneX, middleLaneX, rightLaneX };
 
+
         for (int i = 0; i < 10; i++)
         {
             float randomLaneX = preferredLanes[Random.Range(0, preferredLanes.Length)];
 
-            // Evitar el carril del jugador
             if (IsPlayerLane(randomLaneX))
                 continue;
 
-            // Si ya hay 2 carros detras, reaparece mas lejos o adelante para no llenar los 3 carriles
             float randomZ;
             if (carsBehind >= 2)
                 randomZ = player.position.z + Random.Range(-35f, -25f);
             else
                 randomZ = player.position.z + Random.Range(respawnBehindMin, respawnBehindMax);
 
-            Vector3 spawnPos = new Vector3(randomLaneX, transform.position.y, randomZ);
+            Vector3 spawnPos = new Vector3(randomLaneX, groundY, randomZ);
 
             if (IsSpawnPositionFree(spawnPos))
             {
@@ -279,11 +279,12 @@ public class CarIA : MonoBehaviour
         isChangingLane = false;
     }
 
+
     private bool IsSpawnPositionFree(Vector3 spawnPos)
     {
         Collider[] nearbyCars = Physics.OverlapBox(
             spawnPos,
-            new Vector3(sideCheckRadius, 1.5f, forwardBackCheckDistance),
+            new Vector3(sideCheckRadius, 2.5f, forwardBackCheckDistance * 2f), // <-- más margen
             Quaternion.identity,
             carLayer
         );
@@ -292,7 +293,6 @@ public class CarIA : MonoBehaviour
         {
             if (col.gameObject == gameObject)
                 continue;
-
             return false;
         }
 
@@ -412,11 +412,11 @@ public class CarIA : MonoBehaviour
 
         Lane currentLane = GetCurrentLane();
 
-        // Solo aplicamos esta regla especial cuando el enemy está en el carril del medio
+        //cuando el enemy esta en el carril del medio
         if (currentLane != Lane.Middle)
             return false;
 
-        // Solo importa si el jugador está cerca del enemy en Z
+        // si el jugador esta cerca del enemy en Z
         float zDistanceToPlayer = Mathf.Abs(player.position.z - transform.position.z);
 
         if (zDistanceToPlayer > playerLaneBlockDistanceZ)
@@ -426,7 +426,7 @@ public class CarIA : MonoBehaviour
         if (IsPlayerLane(desiredLaneX))
             return true;
 
-        // Si intenta irse al carril libre, pero ese carril está ocupado por otro enemy, bloquear también
+        // Si intenta irse al carril libre, pero ese carril está ocupado por otro enemy, bloquear tambien
         if (IsLaneOccupiedByOtherCar(desiredLaneX))
             return true;
 
@@ -435,17 +435,11 @@ public class CarIA : MonoBehaviour
 
     private bool IsLaneOccupiedByOtherCar(float laneX)
     {
-        Vector3 currentPos = transform.position;
-
-        Vector3 checkCenter = new Vector3(
-            laneX,
-            currentPos.y,
-            currentPos.z
-        );
+        Vector3 checkCenter = new Vector3(laneX, transform.position.y, transform.position.z);
 
         Collider[] nearbyCars = Physics.OverlapBox(
             checkCenter,
-            new Vector3(sideCheckRadius, 1.5f, forwardBackCheckDistance),
+            new Vector3(sideCheckRadius, 2.5f, forwardBackCheckDistance * 1.5f),
             Quaternion.identity,
             carLayer
         );
@@ -454,7 +448,6 @@ public class CarIA : MonoBehaviour
         {
             if (col.gameObject == gameObject)
                 continue;
-
             return true;
         }
 
