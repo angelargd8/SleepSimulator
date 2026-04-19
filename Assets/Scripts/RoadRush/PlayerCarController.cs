@@ -12,15 +12,15 @@ public class PlayerCarController : MonoBehaviour
     [SerializeField] private float laneChangeSpeed = 8f;
 
     [Header("Boost automatico en Z")]
-    [SerializeField] private float boostSpeed = 15f;
-    [SerializeField] private float boostDuration = 1.5f;
-    [SerializeField] private float boostCooldown = 0.01f;
+    [SerializeField] private float boostSpeed = 2f;
+    [SerializeField] private float boostDuration = 0.5f;
+    [SerializeField] private float boostCooldown = 2f;
 
     [Header("Boost con Shift")]
-    [SerializeField] private float manualBoostSpeed = 25f;
-    [SerializeField] private float manualBoostDuration = 2f;
+    [SerializeField] private float manualBoostSpeed = 8f;
+    [SerializeField] private float manualBoostDuration = 1.5f;
     [SerializeField] private float manualBoostCooldown = 0.01f;
-    [SerializeField] private int manualBoostCharges = 10;
+    [SerializeField] private int manualBoostCharges = 5;
     [SerializeField] private TMP_Text boostText;
 
     [Header("Detección enemigo detrás")]

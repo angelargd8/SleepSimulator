@@ -1218,9 +1218,9 @@ MonoBehaviour:
   middleLaneX: -1.29
   rightLaneX: 1.4
   laneChangeSpeed: 8
-  boostSpeed: 11
-  boostDuration: 0.8
-  boostCooldown: 0.5
+  boostSpeed: 2
+  boostDuration: 0.5
+  boostCooldown: 2
   manualBoostSpeed: 10
   manualBoostDuration: 1.5
   manualBoostCooldown: 0.01
