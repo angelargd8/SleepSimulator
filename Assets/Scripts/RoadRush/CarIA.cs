@@ -45,6 +45,18 @@ public class CarIA : MonoBehaviour
     [SerializeField] private float evadeBoost = 2f;
     [SerializeField] private float speedRecoverRate = 1.5f;
 
+    [Header("Salto obstaculos")]
+    [SerializeField] private LayerMask obstacleLayer;
+    [SerializeField] private float obstacleCheckDistance = 3f;
+    [SerializeField] private Vector3 obstacleCheckHalfExtents = new Vector3(0.45f, 0.6f, 0.8f);
+    [SerializeField] private float jumpHeight = 1.6f;
+    [SerializeField] private float jumpSpeed = 6f;
+    [SerializeField] private float fallSpeed = 7f;
+
+    private float groundY;
+    private bool isJumping = false;
+    private bool isFalling = false;
+
     private float targetLaneX;
     private bool isChangingLane = false;
     private float decisionTimer;
@@ -59,8 +71,10 @@ public class CarIA : MonoBehaviour
     private void Start()
     {
         targetLaneX = GetClosestLaneX();
+        groundY = transform.position.y;
         decisionTimer = decisionInterval;
         forwardSpeed = Random.Range(minSpeed, maxSpeed);
+        
     }
 
     private void Update()
@@ -70,6 +84,58 @@ public class CarIA : MonoBehaviour
         HandleLaneChange();
         HandleDecisionTimer();
         RecycleIfNeeded();
+        CheckObstacleJump();
+        HandleJump();
+    }
+    private void CheckObstacleJump()
+    {
+        if (isJumping || isFalling)
+            return;
+
+        Vector3 checkCenter = transform.position + Vector3.forward * obstacleCheckDistance;
+
+        Collider[] hits = Physics.OverlapBox(
+            checkCenter,
+            obstacleCheckHalfExtents,
+            Quaternion.identity,
+            obstacleLayer
+        );
+
+        if (hits.Length > 0)
+        {
+            isJumping = true;
+        }
+    }
+
+    private void HandleJump()
+    {
+        Vector3 pos = transform.position;
+
+        if (isJumping)
+        {
+            pos.y = Mathf.MoveTowards(pos.y, groundY + jumpHeight, jumpSpeed * Time.deltaTime);
+            transform.position = pos;
+
+            if (Mathf.Abs(transform.position.y - (groundY + jumpHeight)) < 0.05f)
+            {
+                isJumping = false;
+                isFalling = true;
+            }
+
+            return;
+        }
+
+        if (isFalling)
+        {
+            pos.y = Mathf.MoveTowards(pos.y, groundY, fallSpeed * Time.deltaTime);
+            transform.position = pos;
+
+            if (Mathf.Abs(transform.position.y - groundY) < 0.05f)
+            {
+                transform.position = new Vector3(transform.position.x, groundY, transform.position.z);
+                isFalling = false;
+            }
+        }
     }
 
     private void ReactToPlayer()
@@ -484,5 +550,8 @@ public class CarIA : MonoBehaviour
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(transform.position, new Vector3(1f, 1f, avoidPlayerSideDistance * 2f));
+        Gizmos.color = Color.green;
+        Vector3 obstacleCheckCenter = transform.position + Vector3.forward * obstacleCheckDistance;
+        Gizmos.DrawWireCube(obstacleCheckCenter, obstacleCheckHalfExtents * 2f);
     }
 }

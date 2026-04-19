@@ -48,6 +48,21 @@ public class PlayerCarController : MonoBehaviour
     [Header("Lose Dream Controller")]
     [SerializeField] private LoseDreamController loseDreamController;
 
+    [Header("Salto obstaculos")]
+    [SerializeField] private LayerMask obstacleLayer;
+    [SerializeField] private float obstacleCheckDistance = 3f;
+    [SerializeField] private Vector3 obstacleCheckHalfExtents = new Vector3(0.45f, 0.6f, 0.8f);
+    [SerializeField] private float jumpHeight = 1.8f;
+    [SerializeField] private float jumpSpeed = 7f;
+    [SerializeField] private float fallSpeed = 8f;
+
+    [Header("choque sfx")]
+    [SerializeField] AudioClip crashSFX;
+
+    private float groundY;
+    private bool isJumping = false;
+    private bool isFalling = false;
+
     private float targetLaneX;
 
     // Boost automatico
@@ -68,9 +83,11 @@ public class PlayerCarController : MonoBehaviour
     private void Start()
     {
         targetLaneX = GetClosestLaneX();
+        groundY = transform.position.y;
         UpdateLivesUI();
         UpdateScoreUI();
         UpdateBoostUI();
+        
     }
 
     private void Update()
@@ -80,8 +97,49 @@ public class PlayerCarController : MonoBehaviour
         HandleBoost();
         HandleManualBoost();
         UpdateScore();
+        HandleJump();
+
     }
 
+    private void TryJump()
+    {
+        if (isJumping || isFalling)
+            return;
+
+        isJumping = true;
+    }
+
+    private void HandleJump()
+    {
+        Vector3 pos = transform.position;
+
+        if (isJumping)
+        {
+            pos.y = Mathf.MoveTowards(pos.y, groundY + jumpHeight, jumpSpeed * Time.deltaTime);
+            transform.position = pos;
+
+            if (Mathf.Abs(transform.position.y - (groundY + jumpHeight)) < 0.05f)
+            {
+                isJumping = false;
+                isFalling = true;
+            }
+
+            return;
+        }
+
+        if (isFalling)
+        {
+            pos.y = Mathf.MoveTowards(pos.y, groundY, fallSpeed * Time.deltaTime);
+            transform.position = pos;
+
+            if (Mathf.Abs(transform.position.y - groundY) < 0.05f)
+            {
+                transform.position = new Vector3(transform.position.x, groundY, transform.position.z);
+                isFalling = false;
+            }
+        }
+    }
+    
     private void UpdateScore()
     {
         scoreAccumulator += 10f * Time.deltaTime;
@@ -123,6 +181,11 @@ public class PlayerCarController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
         {
             TryUseManualBoost();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TryJump();
         }
     }
 
@@ -293,6 +356,17 @@ public class PlayerCarController : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             TakeDamage();
+            return;
+        }
+
+        if (other.CompareTag("Obstacle"))
+        {
+            if (!isJumping && !isFalling)
+            {
+                TakeDamage();
+            }
+
+            return;
         }
     }
 
@@ -301,6 +375,17 @@ public class PlayerCarController : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             TakeDamage();
+            return;
+        }
+
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            if (!isJumping && !isFalling)
+            {
+                TakeDamage();
+            }
+
+            return;
         }
     }
 
@@ -311,7 +396,7 @@ public class PlayerCarController : MonoBehaviour
 
         lives--;
         isInvulnerable = true;
-
+        AudioManager.Instance.PlaySFX(crashSFX);
         Debug.Log("Golpe! Vidas restantes: " + lives);
         UpdateLivesUI();
 
@@ -346,8 +431,9 @@ public class PlayerCarController : MonoBehaviour
 
     private void GameOver()
     {
-        //Debug.Log("GAME OVER");
-        //Time.timeScale = 0f;
+        GameScoreData.finalScore = score;
+        GameScoreData.cameFromDream = true;
+
         loseDreamController.PlayerLost();
     }
 
@@ -395,5 +481,8 @@ public class PlayerCarController : MonoBehaviour
         Gizmos.DrawWireCube(laneCheckLeft, laneBlockCheckHalfExtents * 2f);
         Gizmos.DrawWireCube(laneCheckMiddle, laneBlockCheckHalfExtents * 2f);
         Gizmos.DrawWireCube(laneCheckRight, laneBlockCheckHalfExtents * 2f);
+        Gizmos.color = Color.green;
+        Vector3 obstacleCheckCenter = transform.position + Vector3.forward * obstacleCheckDistance;
+        Gizmos.DrawWireCube(obstacleCheckCenter, obstacleCheckHalfExtents * 2f);
     }
 }

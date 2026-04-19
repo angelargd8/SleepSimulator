@@ -276,6 +276,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4659338767130434710, guid: 768bab8ceac0c8944a37a1b5eba8502c, type: 3}
+      propertyPath: returnSceneName
+      value: Sleeping
+      objectReference: {fileID: 0}
     - target: {fileID: 6842056251399034218, guid: 768bab8ceac0c8944a37a1b5eba8502c, type: 3}
       propertyPath: m_Name
       value: DreamLoseManager
@@ -678,6 +682,14 @@ MonoBehaviour:
   overtakeBoost: 3
   evadeBoost: 2
   speedRecoverRate: 1.5
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  obstacleCheckDistance: 3
+  obstacleCheckHalfExtents: {x: 0.45, y: 0.6, z: 0.8}
+  jumpHeight: 1.6
+  jumpSpeed: 6
+  fallSpeed: 7
 --- !u!54 &741448899
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1002,6 +1014,14 @@ MonoBehaviour:
   overtakeBoost: 3
   evadeBoost: 2
   speedRecoverRate: 1.5
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  obstacleCheckDistance: 3
+  obstacleCheckHalfExtents: {x: 0.45, y: 0.6, z: 0.8}
+  jumpHeight: 1.6
+  jumpSpeed: 6
+  fallSpeed: 7
 --- !u!54 &1212826274
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1075,6 +1095,14 @@ MonoBehaviour:
   overtakeBoost: 3
   evadeBoost: 2
   speedRecoverRate: 1.5
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  obstacleCheckDistance: 3
+  obstacleCheckHalfExtents: {x: 0.45, y: 0.6, z: 0.8}
+  jumpHeight: 1.6
+  jumpSpeed: 6
+  fallSpeed: 7
 --- !u!54 &1315154987
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1239,6 +1267,15 @@ MonoBehaviour:
   laneBlockSameZTolerance: 1.2
   invulnerabilityTime: 1
   loseDreamController: {fileID: 172136577}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  obstacleCheckDistance: 3
+  obstacleCheckHalfExtents: {x: 0.45, y: 0.6, z: 0.8}
+  jumpHeight: 1.8
+  jumpSpeed: 7
+  fallSpeed: 8
+  crashSFX: {fileID: 8300000, guid: 33a65545754585b46ace929bf20fda96, type: 3}
 --- !u!1 &1551349840
 GameObject:
   m_ObjectHideFlags: 0
@@ -1775,6 +1812,14 @@ MonoBehaviour:
   overtakeBoost: 3
   evadeBoost: 2
   speedRecoverRate: 1.5
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  obstacleCheckDistance: 3
+  obstacleCheckHalfExtents: {x: 0.45, y: 0.6, z: 0.8}
+  jumpHeight: 1.6
+  jumpSpeed: 6
+  fallSpeed: 7
 --- !u!54 &1931721385
 Rigidbody:
   m_ObjectHideFlags: 0

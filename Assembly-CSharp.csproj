@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\DreamLoseController.cs" />
     <Compile Include="Assets\Scripts\DreamManager.cs" />
     <Compile Include="Assets\Scripts\SleepSystem.cs" />
+    <Compile Include="Assets\Scripts\GameScoreData.cs" />
     <Compile Include="Assets\Scripts\RoadRush\Wheel.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\VegetationBendControl.cs" />
     <Compile Include="Assets\Scripts\Lamp.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Assets\Scripts\IInteractable.cs" />
     <Compile Include="Assets\Scripts\InteractionSystem.cs" />
     <Compile Include="Assets\Scripts\Bed.cs" />
+    <Compile Include="Assets\Scripts\RoadRush\SleepController.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualButton.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\ButterflySpawnArea.cs" />

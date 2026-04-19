@@ -3,7 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class LoseDreamController : MonoBehaviour
 {
-    [SerializeField] private string returnSceneName = "Bedroom";
+    [SerializeField] private string returnSceneName = "Sleeping";
+    //[SerializeField] private string returnSceneName = "Bedroom";
+
 
     private bool hasLost = false;
 
