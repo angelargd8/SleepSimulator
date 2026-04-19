@@ -4,7 +4,7 @@
 
 https://youtu.be/i71BeMZzGlQ
 
-# Demo en Itch.io: 
+# Demo de la primera version en Itch.io: 
 https://angelargd8.itch.io/sleepsimulator?secret=gMhjAZNXUgFbp9xSiKY1KUWDim8
 
 
@@ -22,6 +22,29 @@ Puede tener un sueño lúcido si tiene un score alto, ya que estos tienen un cos
 - **Double Space (LucidDream)** – Volar
 
 
+# Mini-game: RoadRush
+**Mini game endless runner**
+
+### Objetivo
+Llegar lo más lejos posible mientras se evitan obstaculos y se obtienen recompensas
+
+- **A / Left Arrow** – moverse a la izquierda
+- **D / Right Arrow** – moverse a la derecha
+- **Space** – Salto
+- **shift** - boost
+
+Recompensas: 
+- wheels
+
+Obstaculos: 
+- Tumbulos
+- Carros
+
+
+
+
+
+
 Assets: 
 - https://assetstore.unity.com/packages/3d/props/electronics/old-ussr-lamp-110400
 - https://assetstore.unity.com/packages/3d/props/basic-bedroom-starterpack-215986
@@ -30,3 +53,4 @@ Assets:
 - https://assetstore.unity.com/packages/3d/environments/urban/city-voxel-pack-136141
 - https://assetstore.unity.com/packages/3d/vegetation/trees/low-poly-tree-pack-57866
 - https://assetstore.unity.com/packages/3d/environments/fantasy/idyllic-fantasy-nature-260042
+- https://assetstore.unity.com/packages/3d/props/low-poly-3d-wheel-model-pack-247391
