@@ -43,6 +43,9 @@ public class SegmentPool : MonoBehaviour
     {
         seg.SetActive(true);
         seg.transform.position = new Vector3(0, 0, spawnZ);
+
+        ResetWheelsInSegment(seg);
+
         spawnZ += segmentLength;
         activeSegments.Enqueue(seg);
 
@@ -74,9 +77,21 @@ public class SegmentPool : MonoBehaviour
             float newZ = lastSegment.transform.position.z + segmentLength;
             seg.transform.position = new Vector3(0, 0, newZ);
 
+            ResetWheelsInSegment(seg);
+
             activeSegments.Enqueue(seg);
         }
 
+    }
+
+    private void ResetWheelsInSegment(GameObject segment)
+    {
+        Wheel[] wheels = segment.GetComponentsInChildren<Wheel>(true);
+
+        foreach (Wheel wheel in wheels)
+        {
+            wheel.ResetWheel();
+        }
     }
 
 

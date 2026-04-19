@@ -32,6 +32,7 @@ public class CarIA : MonoBehaviour
     [SerializeField] private float sideCheckRadius = 1.2f;
     [SerializeField] private float forwardBackCheckDistance = 4f;
     [SerializeField] private LayerMask carLayer;
+    [SerializeField] private float playerLaneBlockDistanceZ = 6f;
 
     [Header("Reacción al jugador")]
     [SerializeField] private float sameLaneTolerance = 0.6f;
@@ -327,8 +328,54 @@ public class CarIA : MonoBehaviour
 
     private bool CanChangeToLane(float desiredLaneX)
     {
+        // Bloquea cambios peligrosos relacionados con el jugador y otros enemies
+        if (ShouldBlockPlayerLaneChange(desiredLaneX))
+            return false;
+
+        // Bloqueo general: no cambiarse si el carril destino tiene otro carro
+        if (IsLaneOccupiedByOtherCar(desiredLaneX))
+            return false;
+
+        return true;
+    }
+
+    private bool ShouldBlockPlayerLaneChange(float desiredLaneX)
+    {
+        if (player == null)
+            return false;
+
+        Lane currentLane = GetCurrentLane();
+
+        // Solo aplicamos esta regla especial cuando el enemy está en el carril del medio
+        if (currentLane != Lane.Middle)
+            return false;
+
+        // Solo importa si el jugador está cerca del enemy en Z
+        float zDistanceToPlayer = Mathf.Abs(player.position.z - transform.position.z);
+
+        if (zDistanceToPlayer > playerLaneBlockDistanceZ)
+            return false;
+
+        // Si intenta irse al carril donde está el jugador, bloquear
+        if (IsPlayerLane(desiredLaneX))
+            return true;
+
+        // Si intenta irse al carril libre, pero ese carril está ocupado por otro enemy, bloquear también
+        if (IsLaneOccupiedByOtherCar(desiredLaneX))
+            return true;
+
+        return false;
+    }
+
+    private bool IsLaneOccupiedByOtherCar(float laneX)
+    {
         Vector3 currentPos = transform.position;
-        Vector3 checkCenter = new Vector3(desiredLaneX, currentPos.y, currentPos.z);
+
+        Vector3 checkCenter = new Vector3(
+            laneX,
+            currentPos.y,
+            currentPos.z
+        );
 
         Collider[] nearbyCars = Physics.OverlapBox(
             checkCenter,
@@ -342,11 +389,13 @@ public class CarIA : MonoBehaviour
             if (col.gameObject == gameObject)
                 continue;
 
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
+
+
 
     private bool IsPlayerLane(float laneX)
     {
