@@ -68,6 +68,7 @@
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualJoystick.cs" />
     <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\RoadRush\TV.cs" />
     <Compile Include="Assets\Scripts\RoadRush\SegmentPool.cs" />
     <Compile Include="Assets\Scripts\DreamLoseController.cs" />
     <Compile Include="Assets\Scripts\DreamManager.cs" />
