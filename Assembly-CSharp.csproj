@@ -68,7 +68,6 @@
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualJoystick.cs" />
     <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\RoadRush\TV.cs" />
     <Compile Include="Assets\Scripts\RoadRush\SegmentPool.cs" />
     <Compile Include="Assets\Scripts\DreamLoseController.cs" />
     <Compile Include="Assets\Scripts\DreamManager.cs" />
@@ -83,6 +82,7 @@
     <Compile Include="Assets\StarterAssets\FirstPersonController\Scripts\FirstPersonController.cs" />
     <Compile Include="Assets\Scripts\DreamTransition.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\ButterflySpawn.cs" />
+    <Compile Include="Assets\Scripts\WateringController.cs" />
     <Compile Include="Assets\Scripts\IInteractable.cs" />
     <Compile Include="Assets\Scripts\InteractionSystem.cs" />
     <Compile Include="Assets\Scripts\Bed.cs" />
@@ -90,15 +90,18 @@
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualButton.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\ButterflySpawnArea.cs" />
+    <Compile Include="Assets\Scripts\TV.cs" />
     <Compile Include="Assets\Scripts\RoadRush\CarIA.cs" />
     <Compile Include="Assets\StarterAssets\FirstPersonController\Scripts\BasicRigidBodyPush.cs" />
     <Compile Include="Assets\Scripts\RoadRush\CarManager.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\CanvasInputs\UICanvasControllerInput.cs" />
+    <Compile Include="Assets\Scripts\wateringcupPickup.cs" />
     <Compile Include="Assets\Scripts\RoadRush\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\LevelManager.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\ExitGame.cs" />
     <Compile Include="Assets\Scripts\Door.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\RoadRush\PlayerInventory.cs" />
     <Compile Include="Assets\Scripts\TimedDreamController.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\BushLeafTrigger.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
