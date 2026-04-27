@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\FallingAsleepController.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualTouchZone.cs" />
     <Compile Include="Assets\Scripts\LucidDream\FlyController.cs" />
+    <Compile Include="Assets\Scripts\Bedroom\Plant.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualJoystick.cs" />
     <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\PlayerMovement.cs" />
