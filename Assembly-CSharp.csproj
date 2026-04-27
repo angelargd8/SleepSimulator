@@ -61,6 +61,7 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.3.9f1\Editor\Data\Tools\BuildPipeline\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Bedroom\Door.cs" />
     <Compile Include="Assets\Scripts\RoadRush\PlayerCarController.cs" />
     <Compile Include="Assets\Scripts\FallingAsleepController.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualTouchZone.cs" />
@@ -74,38 +75,38 @@
     <Compile Include="Assets\Scripts\SleepSystem.cs" />
     <Compile Include="Assets\Scripts\GameScoreData.cs" />
     <Compile Include="Assets\Scripts\RoadRush\Wheel.cs" />
+    <Compile Include="Assets\Scripts\Bedroom\WateringController.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\VegetationBendControl.cs" />
-    <Compile Include="Assets\Scripts\Lamp.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\Utilities\MobileDisableAutoSwitchControls.cs" />
+    <Compile Include="Assets\Scripts\Bedroom\Bed.cs" />
+    <Compile Include="Assets\Scripts\Bedroom\wateringcupPickup.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\WindControl.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\CameraMovement.cs" />
     <Compile Include="Assets\StarterAssets\FirstPersonController\Scripts\FirstPersonController.cs" />
     <Compile Include="Assets\Scripts\DreamTransition.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\ButterflySpawn.cs" />
-    <Compile Include="Assets\Scripts\WateringController.cs" />
     <Compile Include="Assets\Scripts\IInteractable.cs" />
     <Compile Include="Assets\Scripts\InteractionSystem.cs" />
-    <Compile Include="Assets\Scripts\Bed.cs" />
+    <Compile Include="Assets\Scripts\Bedroom\Fan.cs" />
     <Compile Include="Assets\Scripts\RoadRush\SleepController.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualButton.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\ButterflySpawnArea.cs" />
-    <Compile Include="Assets\Scripts\TV.cs" />
     <Compile Include="Assets\Scripts\RoadRush\CarIA.cs" />
+    <Compile Include="Assets\Scripts\Bedroom\TV.cs" />
     <Compile Include="Assets\StarterAssets\FirstPersonController\Scripts\BasicRigidBodyPush.cs" />
     <Compile Include="Assets\Scripts\RoadRush\CarManager.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\CanvasInputs\UICanvasControllerInput.cs" />
-    <Compile Include="Assets\Scripts\wateringcupPickup.cs" />
     <Compile Include="Assets\Scripts\RoadRush\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\LevelManager.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\ExitGame.cs" />
-    <Compile Include="Assets\Scripts\Door.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\RoadRush\PlayerInventory.cs" />
     <Compile Include="Assets\Scripts\TimedDreamController.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\BushLeafTrigger.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\StarterAssets\InputSystem\StarterAssetsInputs.cs" />
+    <Compile Include="Assets\Scripts\Bedroom\Lamp.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
