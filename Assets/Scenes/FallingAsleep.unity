@@ -731,7 +731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   transitionDuration: 5
-  dreamManager: {fileID: 0}
+  dreamManager: {fileID: 2609920389648730103, guid: f35c52e483905ae4789cf2ea68848b4d, type: 3}
 --- !u!4 &1666760520
 Transform:
   m_ObjectHideFlags: 0

@@ -11,6 +11,6 @@ public class BoostrapLoader
         if (Object.FindFirstObjectByType<Boostrapper>() != null)
             return;
 
-        SceneManager.LoadScene("BedRoom");
+        SceneManager.LoadScene("Boostrap",LoadSceneMode.Additive);
     }
 }
