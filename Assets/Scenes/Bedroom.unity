@@ -23462,7 +23462,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   isOn: 0
-  fan: {fileID: 1881316704}
   fanSfx: {fileID: 8300000, guid: 70c74b6a8b3d5204a867268405f71383, type: 3}
 --- !u!4 &1890682292 stripped
 Transform:
