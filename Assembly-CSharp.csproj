@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\RoadRush\PlayerCarController.cs" />
     <Compile Include="Assets\Scripts\FallingAsleepController.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualTouchZone.cs" />
+    <Compile Include="Assets\Scripts\Boostrapper.cs" />
     <Compile Include="Assets\Scripts\LucidDream\FlyController.cs" />
     <Compile Include="Assets\Scripts\Bedroom\Plant.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualJoystick.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\CanvasInputs\UICanvasControllerInput.cs" />
     <Compile Include="Assets\Scripts\RoadRush\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\BoostrapLoader.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\ExitGame.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\RoadRush\PlayerInventory.cs" />
