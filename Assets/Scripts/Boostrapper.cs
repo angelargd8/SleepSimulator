@@ -6,15 +6,17 @@ public class Boostrapper : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
+        {
+
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
         {
             Destroy(instance);
         }
-        else
-        {
-            instance = this;
-        }
 
-        DontDestroyOnLoad(gameObject);
+
     }
 }

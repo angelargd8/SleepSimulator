@@ -1,16 +1,46 @@
 
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Level Settings")]
-    [SerializeField] AudioClip ambienceClip;
 
+    public static GameManager instance;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
-        AudioManager.Instance.PlayAmbience(ambienceClip);
+        if (instance == null)
+        {
+            
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(instance);
+        }
 
+        
     }
+
+
+    public void LoadScene(string sceneName)
+    {
+        StartCoroutine(LoadSceneAsync(sceneName));
+    }
+
+    IEnumerator LoadSceneAsync(string sceneName)
+    {
+        var operation = SceneManager.LoadSceneAsync(sceneName);
+
+        while (!operation.isDone)
+        {
+            yield return null;
+        }
+
+        
+    }
+
+
 }
