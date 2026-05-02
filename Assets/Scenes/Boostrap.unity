@@ -171,11 +171,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boostrap
       objectReference: {fileID: 0}
+    - target: {fileID: 8733676051300960980, guid: 246d354b5745c1c41b12d3871da3579d, type: 3}
+      propertyPath: musicSource
+      value: 
+      objectReference: {fileID: 1362753576}
+    - target: {fileID: 8733676051300960980, guid: 246d354b5745c1c41b12d3871da3579d, type: 3}
+      propertyPath: bedroomMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 68308df34377fc141b8b7dc50b179999, type: 3}
+    - target: {fileID: 8733676051300960980, guid: 246d354b5745c1c41b12d3871da3579d, type: 3}
+      propertyPath: loadingMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 8b790228ebdc609409211ebba43b46c2, type: 3}
+    - target: {fileID: 8733676051300960980, guid: 246d354b5745c1c41b12d3871da3579d, type: 3}
+      propertyPath: mainMenuMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: c1248bfa305502e4bb63c8cba45ad836, type: 3}
+    - target: {fileID: 8733676051300960980, guid: 246d354b5745c1c41b12d3871da3579d, type: 3}
+      propertyPath: roadRushMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: f59fe3e2b5b00ed4fa0da9548c882a13, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 246d354b5745c1c41b12d3871da3579d, type: 3}
+--- !u!82 &1362753576 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 572112609100791329, guid: 246d354b5745c1c41b12d3871da3579d, type: 3}
+  m_PrefabInstance: {fileID: 1362753575}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

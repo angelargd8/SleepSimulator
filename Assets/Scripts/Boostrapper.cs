@@ -15,6 +15,7 @@ public class Boostrapper : MonoBehaviour
         else if (instance != this)
         {
             Destroy(instance);
+            return;
         }
 
 

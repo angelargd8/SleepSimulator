@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
         else if (instance != this)
         {
             Destroy(instance);
+            return;
         }
 
         
@@ -33,23 +34,28 @@ public class GameManager : MonoBehaviour
 
     IEnumerator LoadSceneAsync(string sceneName)
     {
-                
-        var operation = SceneManager.LoadSceneAsync(sceneName);
-        operation.allowSceneActivation = false;
-
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayLoadingMusic();
+        }
 
         //TODO: aqui luego editar otras ciertas escenas y manejar mejor el redirijir a otras escenas
 
         SceneManager.LoadScene("LoadingScene", LoadSceneMode.Additive);
 
-        while (operation.progress < 0.9)
+        yield return null;
+
+        var operation = SceneManager.LoadSceneAsync(sceneName);
+        operation.allowSceneActivation = false;
+
+        while (operation.progress < 0.9f)
         {
             yield return null;
         }
 
         yield return new WaitForSeconds(3.0f);
 
-        SceneManager.UnloadSceneAsync("LoadingScene");
+
         operation.allowSceneActivation = true;
 
 
@@ -58,7 +64,15 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
+        if (SceneManager.GetSceneByName("LoadingScene").isLoaded)
+        {
+            yield return SceneManager.UnloadSceneAsync("LoadingScene");
+        }
 
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayMusicForScene(sceneName);
+        }
     }
 
 

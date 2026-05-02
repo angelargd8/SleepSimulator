@@ -160,6 +160,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4393484402665386520, guid: afe761ac40f5d974fb3ef0421ce8d551, type: 3}
+      propertyPath: musicSource
+      value: 
+      objectReference: {fileID: 572112609100791329}
+    - target: {fileID: 4393484402665386520, guid: afe761ac40f5d974fb3ef0421ce8d551, type: 3}
+      propertyPath: bedroomMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 68308df34377fc141b8b7dc50b179999, type: 3}
+    - target: {fileID: 4393484402665386520, guid: afe761ac40f5d974fb3ef0421ce8d551, type: 3}
+      propertyPath: loadingMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 8b790228ebdc609409211ebba43b46c2, type: 3}
+    - target: {fileID: 4393484402665386520, guid: afe761ac40f5d974fb3ef0421ce8d551, type: 3}
+      propertyPath: mainMenuMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: c1248bfa305502e4bb63c8cba45ad836, type: 3}
+    - target: {fileID: 4393484402665386520, guid: afe761ac40f5d974fb3ef0421ce8d551, type: 3}
+      propertyPath: roadRushMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: f59fe3e2b5b00ed4fa0da9548c882a13, type: 3}
+    - target: {fileID: 4393484402665386520, guid: afe761ac40f5d974fb3ef0421ce8d551, type: 3}
+      propertyPath: lucidDreamMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 336c7a786684ab84387d065c10769395, type: 3}
     - target: {fileID: 5878296374595061527, guid: afe761ac40f5d974fb3ef0421ce8d551, type: 3}
       propertyPath: m_Name
       value: AudioManager
@@ -172,6 +196,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1063433608402600598}
   m_SourcePrefab: {fileID: 100100000, guid: afe761ac40f5d974fb3ef0421ce8d551, type: 3}
+--- !u!82 &572112609100791329 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4772698166775432941, guid: afe761ac40f5d974fb3ef0421ce8d551, type: 3}
+  m_PrefabInstance: {fileID: 5029547514759985356}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1468012646392610779 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5878296374595061527, guid: afe761ac40f5d974fb3ef0421ce8d551, type: 3}

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 
@@ -7,12 +8,112 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private AudioMixer audioMixer;
 
-    private AudioSource sfxAudio => GetComponents<AudioSource>()[0];
+    [Header("Audio")]
+    [SerializeField] private AudioSource musicSource;
 
+    [Header("Música por escena")]
+    [SerializeField] private AudioClip mainMenuMusic;
+    [SerializeField] private AudioClip bedroomMusic;
+    [SerializeField] private AudioClip roadRushMusic;
+    [SerializeField] private AudioClip lucidDreamMusic;
+    [SerializeField] private AudioClip loadingMusic;
+
+    private AudioSource sfxAudio => GetComponents<AudioSource>()[0];
     private AudioSource ambienceAudio => GetComponents<AudioSource>()[1];
     private AudioSource loopSfxAudio => GetComponents<AudioSource>()[2];
 
     public static AudioManager Instance;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void Start()
+    {
+        PlayMusicForScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "LoadingScene")
+            return;
+        PlayMusicForScene(scene.name);
+    }
+
+    public void PlayLoadingMusic()
+    {
+        PlayMusicForScene("LoadingScene");
+    }
+
+    public void PlayMusicForScene(string sceneName)
+    {
+        AudioClip newClip = null;
+
+        switch (sceneName)
+        {
+            case "MainMenu":
+                newClip = mainMenuMusic;
+                break;
+
+            case "SceneMenu":
+                newClip = mainMenuMusic;
+                break;
+
+            case "Bedroom":
+                newClip = bedroomMusic;
+                break;
+
+            case "RoadRush":
+                newClip = roadRushMusic;
+                break;
+
+            case "LucidDream":
+                newClip = lucidDreamMusic;
+                break;
+
+            case "LoadingScene":
+                newClip = loadingMusic;
+                break;
+
+            default:
+                Debug.LogWarning("No hay música configurada para la escena: " + sceneName);
+                return;
+        }
+
+        if (newClip == null)
+        {
+            Debug.LogWarning("El AudioClip de la escena " + sceneName + " no está asignado.");
+            return;
+        }
+
+        if (musicSource.clip == newClip && musicSource.isPlaying)
+            return;
+
+        musicSource.Stop();
+        musicSource.clip = newClip;
+        musicSource.loop = true;
+        musicSource.Play();
+
+        Debug.Log("Reproduciendo música de escena: " + sceneName);
+    }
 
     public float MasterVolume
     {
@@ -45,19 +146,7 @@ public class AudioManager : MonoBehaviour
             vol = (vol + 80.0f) / 80.0f;
             return vol;
         }
-    }
 
-
-    public void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public void PlaySFX(AudioClip clip)
