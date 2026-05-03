@@ -94,6 +94,7 @@
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualButton.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
+    <Compile Include="Assets\Scripts\AreaLoader.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\ButterflySpawnArea.cs" />
     <Compile Include="Assets\Scripts\RoadRush\CarIA.cs" />
     <Compile Include="Assets\Scripts\Bedroom\TV.cs" />

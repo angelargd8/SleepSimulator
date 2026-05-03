@@ -7,8 +7,7 @@ public class LevelManager : MonoBehaviour
 
     [Header("Contador de plantas")]
     [SerializeField] private int wateredPlantsCount = 0;
-    //[SerializeField] private TMP_Text wateredPlantsText;
-    private int wateredPlantsGoal = 18;
+    //private int wateredPlantsGoal = 18;
 
     private void Awake()
     {
@@ -21,24 +20,11 @@ public class LevelManager : MonoBehaviour
         Instance = this;
     }
 
-    //private void Start()
-    //{
-    //    UpdateWateredPlantsUI();
-    //}
-
     public void AddWateredPlant()
     {
         wateredPlantsCount++;
-        //UpdateWateredPlantsUI();
 
         Debug.Log("Plantas regadas: " + wateredPlantsCount);
     }
 
-    //private void UpdateWateredPlantsUI()
-    //{
-    //    if (wateredPlantsText != null)
-    //    {
-    //        wateredPlantsText.text = "Plantas regadas: " + wateredPlantsCount;
-    //    }
-    //}
 }

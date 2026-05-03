@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Bedroom.unity
     guid: 707acc8dffb72b144bb1ffbe1c965f3d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/FallingAsleep.unity
     guid: 92331210912730f43879e746ad273d6e
   - enabled: 1
@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LucidDream.unity
     guid: 00ad17d337a65f940adcf6e7def9f43e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Sleeping.unity
     guid: b1367e3a53895fa4d8c64f38d5f352e0
   - enabled: 1
