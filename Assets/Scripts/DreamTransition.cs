@@ -18,7 +18,8 @@ public class DreamTransition : MonoBehaviour
         if (dreamManager != null)
         {
             string dreamScene = dreamManager.GetRandomDreamScene();
-            UnityEngine.SceneManagement.SceneManager.LoadScene(dreamScene);
+            //UnityEngine.SceneManagement.SceneManager.LoadScene(dreamScene);
+            GameManager.instance.LoadScene(dreamScene);
         }
     }
 }

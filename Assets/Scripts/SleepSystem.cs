@@ -5,7 +5,8 @@ public class SleepSystem : MonoBehaviour
 {
     [SerializeField] private GameObject player;
     [SerializeField] private MonoBehaviour playerController;
-    [SerializeField] private SceneLoader sceneLoader;
+    [SerializeField] private DreamManager dreamManager;
+
 
     [SerializeField] private float sleepDelay = 3f;
 
@@ -17,6 +18,7 @@ public class SleepSystem : MonoBehaviour
 
         StartCoroutine(SleepRoutine(sleepPoint));
     }
+
 
     private IEnumerator SleepRoutine(Transform sleepPoint)
     {
@@ -37,9 +39,15 @@ public class SleepSystem : MonoBehaviour
 
         yield return new WaitForSeconds(sleepDelay);
 
-        if (sceneLoader != null)
+        
+        if (dreamManager != null)
         {
-            sceneLoader.LoadScene("FallingAsleep");
+            string dreamScene = dreamManager.GetRandomDreamScene();
+            GameManager.instance.LoadScene(dreamScene);
+                
         }
+
+
+        
     }
 }

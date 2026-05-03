@@ -44,4 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219804889a682924180025a6f99c05ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  ambienceClip: {fileID: 0}
+  loadingSceneName: LoadingScene
+  bedroomSceneName: Bedroom
+  dreamScenes:
+  - RoadRush
+  - LucidDream
+  bedroomChance: 0.5
+  loadingMinTime: 3

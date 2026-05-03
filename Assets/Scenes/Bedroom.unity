@@ -5934,6 +5934,7 @@ MonoBehaviour:
   player: {fileID: 1333213179}
   playerController: {fileID: 135756641613574978}
   sceneLoader: {fileID: 1460171589}
+  dreamManager: {fileID: 2609920389648730103, guid: f35c52e483905ae4789cf2ea68848b4d, type: 3}
   sleepDelay: 3
 --- !u!4 &576456230 stripped
 Transform:

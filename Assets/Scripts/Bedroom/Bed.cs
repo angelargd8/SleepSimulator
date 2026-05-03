@@ -28,6 +28,7 @@ public class Bed : MonoBehaviour, IInteractable
         if (sleepSystem != null && sleepPoint != null)
         {
             sleepSystem.StartSleeping(sleepPoint);
+   
         }
     }
 }

@@ -1,32 +1,32 @@
-using System.Collections;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+//using System.Collections;
+//using UnityEngine;
+//using UnityEngine.SceneManagement;
 
-public class FallingAsleepController : MonoBehaviour
-{
-    [SerializeField] private float waitTime = 5f;
-    [SerializeField] private DreamManager dreamManager;
+//public class FallingAsleepController : MonoBehaviour
+//{
+//    [SerializeField] private float waitTime = 5f;
+//    [SerializeField] private DreamManager dreamManager;
 
-    private void Start()
-    {
-        StartCoroutine(GoToRandomDream());
-    }
+//    private void Start()
+//    {
+//        StartCoroutine(GoToRandomDream());
+//    }
 
-    private IEnumerator GoToRandomDream()
-    {
-        yield return new WaitForSeconds(waitTime);
+//    private IEnumerator GoToRandomDream()
+//    {
+//        yield return new WaitForSeconds(waitTime);
 
-        if (dreamManager == null)
-        {
-            Debug.LogError("DreamManager no está asignado.");
-            yield break;
-        }
+//        if (dreamManager == null)
+//        {
+//            Debug.LogError("DreamManager no está asignado.");
+//            yield break;
+//        }
 
-        string selectedScene = dreamManager.GetRandomDreamScene();
+//        string selectedScene = dreamManager.GetRandomDreamScene();
 
-        if (!string.IsNullOrEmpty(selectedScene))
-        {
-            SceneManager.LoadScene(selectedScene);
-        }
-    }
-}
+//        if (!string.IsNullOrEmpty(selectedScene))
+//        {
+//            SceneManager.LoadScene(selectedScene);
+//        }
+//    }
+//}

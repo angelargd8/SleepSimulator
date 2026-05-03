@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 using TMPro;
 
@@ -8,6 +7,7 @@ public class SleepController : MonoBehaviour
     [SerializeField] private float waitTime = 5f;
     [SerializeField] private DreamManager dreamManager;
     [SerializeField] private TMP_Text scoreText;
+
 
     [Header("Escena de regreso")]
     [SerializeField] private string returnSceneName = "Bedroom";
@@ -39,7 +39,8 @@ public class SleepController : MonoBehaviour
 
         if (randomValue < bedroomChance)
         {
-            SceneManager.LoadScene(returnSceneName);
+            //SceneManager.LoadScene(returnSceneName);
+            GameManager.instance.LoadScene(returnSceneName);
             yield break;
         }
 
@@ -53,12 +54,14 @@ public class SleepController : MonoBehaviour
 
         if (!string.IsNullOrEmpty(selectedScene))
         {
-            SceneManager.LoadScene(selectedScene);
+            //SceneManager.LoadScene(selectedScene);
+            GameManager.instance.LoadScene(selectedScene);
         }
         else
         {
             Debug.LogWarning("Regresando a Bedroom.");
-            SceneManager.LoadScene(returnSceneName);
+            //SceneManager.LoadScene(returnSceneName);
+            GameManager.instance.LoadScene(returnSceneName);
         }
     }
 }
