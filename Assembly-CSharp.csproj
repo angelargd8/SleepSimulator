@@ -63,7 +63,6 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Bedroom\Door.cs" />
     <Compile Include="Assets\Scripts\RoadRush\PlayerCarController.cs" />
-    <Compile Include="Assets\Scripts\FallingAsleepController.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualTouchZone.cs" />
     <Compile Include="Assets\Scripts\Boostrapper.cs" />
     <Compile Include="Assets\Scripts\LucidDream\FlyController.cs" />
@@ -110,7 +109,6 @@
     <Compile Include="Assets\Scripts\TimedDreamController.cs" />
     <Compile Include="Assets\Idyllic Fantasy Nature\Scripts\BushLeafTrigger.cs" />
     <Compile Include="Assets\Scripts\LoadingScreenData.cs" />
-    <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\StarterAssets\InputSystem\StarterAssetsInputs.cs" />
     <Compile Include="Assets\Scripts\Bedroom\Lamp.cs" />
   </ItemGroup>
