@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -31,7 +30,6 @@ public class AreaLoader : MonoBehaviour
         {
             SceneManager.LoadSceneAsync(area, LoadSceneMode.Additive);
         }
-        //SceneManager.LoadSceneAsync(area, LoadSceneMode.Additive);
 
         yield return null;
     }

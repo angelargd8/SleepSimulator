@@ -39,7 +39,7 @@ public class SleepController : MonoBehaviour
 
         if (randomValue < bedroomChance)
         {
-            //SceneManager.LoadScene(returnSceneName);
+            
             GameManager.instance.LoadScene(returnSceneName);
             yield break;
         }
@@ -54,13 +54,13 @@ public class SleepController : MonoBehaviour
 
         if (!string.IsNullOrEmpty(selectedScene))
         {
-            //SceneManager.LoadScene(selectedScene);
+            
             GameManager.instance.LoadScene(selectedScene);
         }
         else
         {
             Debug.LogWarning("Regresando a Bedroom.");
-            //SceneManager.LoadScene(returnSceneName);
+            
             GameManager.instance.LoadScene(returnSceneName);
         }
     }
